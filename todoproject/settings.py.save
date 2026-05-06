@@ -1,15 +1,13 @@
 import os
 from pathlib import Path
-from dotenv import load_dotenv
-load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = 'django-insecure-test-key'
 
 DEBUG = True
 
-ALLOWED_HOSTS = [os.getenv('MY_IP'), '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -18,8 +16,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'todo',
-
 ]
 
 MIDDLEWARE = [
@@ -86,3 +82,13 @@ STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+import os
+STc
+
+
+
+n
+
+
+
