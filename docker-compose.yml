@@ -1,0 +1,25 @@
+services:
+  web:
+    build: .
+    volumes:
+      - .:/usr/src/app/
+      - static_volume:/usr/src/app/static/
+      - media_volume:/usr/src/app/media/
+    environment:
+      - DEBUG=0
+      - MY_IP=${MY_IP}
+    command: gunicorn todoproject.wsgi:application --bind 0.0.0.0:8000
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - static_volume:/usr/src/app/static/
+      - media_volume:/usr/src/app/media/
+    depends_on:
+      - web
+
+volumes:
+  static_volume:
+  media_volume:
