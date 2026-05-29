@@ -1,0 +1,47 @@
+# Python / Djangoファイル
+#①環境変数ファイル
+.env
+
+# ②コンパイルされたキャッシュファイル
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ③ローカルデータベース
+db.sqlite3
+
+# Terraform / AWSファイル
+# ①プラグインフォルダ（.terraform/）
+# ②インフラの現在の状態
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.tfstate.lock.info
+
+③変数設定ファイル（パスワード等を書く場所）
+*.tfvars
+*.tfvars.json
+output
+output.txt
+
+# ④セキュリティ
+*.pem
+*.pub
+
+# ⑤実行ファイル（terraform.exe 本体）
+*.exe
+
+# ⑥ログファイル
+*.log
+crash.log
+
+#⑦AWS 認証情報と機密情報（AWSのシークレットキーなど
+.aws/
+credentials
+access_token
+
+#⑧ OS / Editor 関連 (Windows/Mac/VSCode)
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
