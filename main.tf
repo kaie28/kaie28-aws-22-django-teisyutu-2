@@ -168,7 +168,7 @@ resource "aws_instance" "kaie28" {
 
 
   #9追加（outputs.tfファイル)
-  # TerraformはAMIのズレを無視できる（EC2再作成防止）。
+  # TerraformはAMI(=os)のズレを無視できる（EC2再作成防止）。
   #（→AMI(=OS)が更新されても、EC2が再作成されないように無視する設定)
   #(注意)ただし、OSタイプなど（例えば  t2.micro に書き換える時など）で、削除される可能性があるので注意する。
 
@@ -185,7 +185,7 @@ resource "aws_instance" "kaie28" {
 }
 
 
-# 10. 変数化(AWSサーバー外部にあるSSM(金庫)に、Djangoが動く時に必要になる機密情報(シークレットキーや通行証、デバック設定など)を保管する)
+# 10. 変数化(AWSサーバー外部にあるSSM(金庫))に、Djangoが動く時に必要になる機密情報(シークレットキーや通行証、デバック設定など)を保管する)
 
 resource "aws_ssm_parameter" "django_secret_key" {
   name  = "/django-v3/SECRET_KEY" 
