@@ -1,0 +1,9 @@
+Host django-aws
+    HostName 13.231.131.73　#(★このIPはサンプル)　　　#←EC2パブリックIPの変動時は変更する。
+    User ec2-user
+    IdentityFile "C:\Users\GuestUser\.ssh\my-ssh-key-v4.pem"
+
+    # EC2の22番とVSCでの内装構築の「内装の電波を切らさない」心臓マッサージ設定。
+    ServerAliveInterval 15   #←15秒ごとに「生きてる？」と自動で22番の内装へ電波を送る
+    ServerAliveCountMax 3     #←3回電波が返ってこなくても我慢して接続を維持
+    TCPKeepAlive yes          #←OS(土台)の電波を確認する
