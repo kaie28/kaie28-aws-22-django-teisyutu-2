@@ -1,5 +1,5 @@
 Host django-aws
-    HostName 13.231.131.73
+    HostName 13.231.131.73　　　#←EC2パブリックIPの変動時は変更する。
     User ec2-user
     IdentityFile "C:\Users\GuestUser\.ssh\my-ssh-key-v4.pem"
 
