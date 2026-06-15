@@ -69,7 +69,7 @@ WSGI_APPLICATION = 'todoproject.wsgi:application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db_data' / 'db.sqlite3',      #←☆☆'db_data'追加して(docker-compose.ymlファイルと連結)で、本番環境でも文字情報が消えない設定。
+        'NAME': BASE_DIR / 'db_data' / 'db.sqlite3',      #←☆☆'db_data'から'db_data' / 'db.sqlite3'に変更する。(＝docker-compose.ymlファイルと連結)で、本番環境でも文字情報が消えない設定にする。
     }
 }
 
