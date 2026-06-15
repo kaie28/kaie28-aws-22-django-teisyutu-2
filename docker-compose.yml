@@ -5,9 +5,9 @@ services:
   web:       　　　　　　 　　　　　　　　　　　　#←1つ目にweb: エリア（Djangoが動く部屋＝奥の部屋）
     build: .　　　　　　　　　　　　　　　　　　　#←今いる場所（.）にある説明書（Dockerfile）を使って、Djangoの部屋の土台を組み立てろ」という指示
     volumes:                                  #←EC2中のDjangoコード（.）を、コンテナの中（/usr/src/app/）にリアルタイムで同期させる」命令。
-      - db_volume:/usr/src/app/db_data/　　　 #☆☆←文字データ（DB=db_data）専用の倉庫を連結(※Djangoのsetting.pyのDATABASESと連結と本設計(下記のvolumes参照)で、本番環境で文字書きえない設定。
-      - static_volume:/usr/src/app/static/　　#←倉庫の連結命令(★本番/開発両方ともON) 
-      - media_volume:/usr/src/app/media/
+      - db_volume:/usr/src/app/db_data/　　　 #☆☆←文字専用倉庫（DB=db_data）専用の倉庫を連結(※Djangoのsetting.pyのDATABASESと連結と本設計(下記のvolumes参照)で、本番環境で文字書きえない設定。
+      - static_volume:/usr/src/app/static/　　#←CSS専用倉庫の連結命令(★本番/開発両方ともON) 
+      - media_volume:/usr/src/app/media/　　　#←画像専用倉庫の連結命令
     environment:
       - DEBUG=0　　　　　　　　　　　　　　　　　#←★本番モードではデバックは0(False) / 開発モードでは1(True)に設定する。
       - MY_IP=${MY_IP}　　　　　　　　　　　　　#←★自分のIP(=My IP)を、変数で隠す　
