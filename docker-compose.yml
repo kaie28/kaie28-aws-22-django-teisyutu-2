@@ -5,7 +5,7 @@ services:
   web:       　　　　　　 　　　　　　　　　　　　#←1つ目にweb: エリア（Djangoが動く部屋＝奥の部屋）
     build: .　　　　　　　　　　　　　　　　　　　#←今いる場所（.）にある説明書（Dockerfile）を使って、Djangoの部屋の土台を組み立てろ」という指示
     volumes:                                  #←EC2中のDjangoコード（.）を、コンテナの中（/usr/src/app/）にリアルタイムで同期させる」命令。
-      - db_volume:/usr/src/app/db_data/　　　 #☆☆←　文字データ（DB）専用の倉庫を連結
+      - db_volume:/usr/src/app/db_data/　　　 #☆☆←　文字データ（DB=db_data）専用の倉庫を連結(※Djangoのsetting.pyのDATABASESと連結)で、本番環境で文字書きえない設定。
       - static_volume:/usr/src/app/static/　　#←倉庫の連結命令(★本番/開発両方ともON) 
       - media_volume:/usr/src/app/media/
     environment:
@@ -23,7 +23,7 @@ services:
     depends_on:　　　　　　　　　　　　　#★web（Django）→Nginx等の順番で起動しろ」という命令(=起動の順番を固定する)
       - web
 
-volumes:　　　　　　　　　　　　　　　　　#←コンテナとは完全独立した(＝データが消されても守れる)、データ保存専用の『倉庫の土台』をパソコン内に作れ」という全体への宣言。
+volumes:　　　　　　　　　　　　　　　　　#←☆☆コンテナとは完全独立した(＝文字や画像データが消されず守れる)、データ保存専用の『倉庫の土台』をパソコン内に作れ」という全体への宣言。
   static_volume:　　　　　　　　　　　　 #←CSS専用倉庫(静的ファイル（CSS）等)の本体を作る命令
-  media_volume:　　　　　　　　　　　　　#←画像専用倉庫(ユーザーが投稿した画像等)」を再起動しても絶対消えず保存されるように、の本体を作る命令。
-　db_volume:　　　　　　　　　　　　　　　#☆☆←文字データ倉庫の土台を自動作成
+  media_volume:　　　　　　　　　　　　　#←画像専用倉庫(ユーザーが投稿した画像等)」を再起動しても絶対に画像は消えず保存されるように、の本体を作る命令。
+　db_volume:　　　　　　　　　　　　　　　#☆☆←文字データ倉庫の土台を自動作成するので、再起動しても文字が消えない設定になる。
