@@ -49,7 +49,8 @@
 
 ### 7【インフラ・コンテナの全体的な構成図】
 
-<img width="680" height="750" alt="image" src="https://github.com/user-attachments/assets/a740fd55-d772-4f6c-95d4-3bf0caffb661" />
+<img width="677" height="750" alt="image" src="https://github.com/user-attachments/assets/4773a880-4f17-47e9-abb4-fd3ff5230953" />
+
 
 
 
