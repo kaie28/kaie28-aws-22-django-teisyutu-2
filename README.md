@@ -10,7 +10,7 @@
 
 ### 2【概要】
 
-・webアプリ(主にPython、Django)、AWS(Terraform、Docker)、セキュリティ(IAM , Security Group)の3本柱を中心に学習しました。また本番環境と開発環境の各利点とする機能を生かした形でデプロイしました。
+・webアプリ(主にPython、Django)、AWS(Terraform、Docker)、セキュリティ(SSM,IAM, Security Group)の3本柱を中心に学習しました。また本番環境と開発環境の各利点とする機能を生かした形でデプロイしました。
 
 
 ### 3【開発背景】
