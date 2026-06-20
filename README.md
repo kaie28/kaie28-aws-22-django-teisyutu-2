@@ -1,6 +1,6 @@
 ### 1.【公開】
 
-・AWSとDjango閲覧は、このGitHubで公開。
+・AWSとDjango閲覧は、このGitHubでのみ公開。
 
 ※【注意】コスト面を考慮して、現在は一時的にインフラ環境(Terraform)を破棄(destroy)してます。
 また再構築したい場合は、設計図はGitHubにコード化して管理しているので、新たにSSHキーを発行、Terraform applyをして頂ければ容易に復元できます。
