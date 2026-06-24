@@ -15,15 +15,15 @@ env = environ.Env() #★
 environ.Env.read_env(os.path.join(BASE_DIR, '.env')) #★
 
 
-SECRET_KEY = os.getenv('SECRET_KEY')
-MY_IP = os.getenv('MY_IP')
+SECRET_KEY = os.getenv('SECRET_KEY')　　#←変数化(シークレットキー)
+MY_IP = os.getenv('MY_IP')　　　　　　　#←変数化（IP）
 
 DEBUG = True
 
 ALLOWED_HOSTS = [
 
     os.environ.get('MY_IP', 'localhost'),
-    '127.0.0.1',
+    '127.0.0.1',　　　　　　　　　　　#←IPのデフォルト
 ]
 
 
