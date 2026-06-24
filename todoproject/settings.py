@@ -1,6 +1,6 @@
 
-import os
-import environ  # ★
+import os　#★
+import environ  # ★django-environライブラリを使うので。
 from pathlib import Path   #★
 
 from pathlib import Path
@@ -9,21 +9,22 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# ★ .envファイル(22番でDjangoシークレトキーやEC2のMy IPなど自動で呼び出し)を探して読み込む設定 （ ● このBASE_DIRの下に、下記2行を追記）
+# ★.envファイル(22番でDjangoシークレトキーやEC2のMy IPなど自動で呼び出し)を探して読み込む設定 （ ● このBASE_DIRの下に、下記2行を追記）
 
 env = environ.Env() #★
 environ.Env.read_env(os.path.join(BASE_DIR, '.env')) #★
 
-
-SECRET_KEY = os.getenv('SECRET_KEY')　　#←変数化(シークレットキー)
-MY_IP = os.getenv('MY_IP')　　　　　　　#←変数化（IP）
+#★シークレットキーとIPを変数化
+SECRET_KEY = env('SECRET_KEY', default= '')　　#←変数化(シークレットキー)
+MY_IP = env('MY_IP', default='127.0.0.1') 　　　#←変数化（IP）、変数がないときはデフォルトで127.0.0.1
 
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    MY_IP,
+    'localhost',
+    '127.0.0.1',　　　　　#←IP（世界共通ローカルIP)
 
-    os.environ.get('MY_IP', 'localhost'),
-    '127.0.0.1',　　　　　　　　　　　#←IPのデフォルト
 ]
 
 
