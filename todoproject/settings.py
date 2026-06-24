@@ -16,7 +16,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env')) #★
 
 
 SECRET_KEY = os.getenv('SECRET_KEY')
-MY_IP = '13.231.131.73'
+MY_IP = os.getenv('MY_IP')
 
 DEBUG = True
 
