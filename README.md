@@ -6,7 +6,7 @@
 
 ### 2【概要】
 
-・シンプルなtodoアプリを作成し、AWS(Terraform、Docker)、セキュリティ(SSM,IAM, Security Group)を中心に学習しました。
+・シンプルなtodoアプリを作成し、AWSの自動化(Terraform、Docker)、セキュリティ(SSM,IAM, Security Group)を中心に学習しました。
 また、本番環境と開発環境の各利点とする機能を生かした形でデプロイしました。
 
 ・本番環境のデプロイを安全に実現させるため、
