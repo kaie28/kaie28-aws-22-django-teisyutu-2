@@ -85,18 +85,23 @@ TEMPLATES = [
 
 
 
-            
+# 2  外部からDjangoの内部の玄関窓口から、WSGIで仲介（翻訳）させるための設定。
+#また、DATABASES の正体（翻訳された文字を保管する場所）
+# todoproject.wsgi は翻訳ルールが書かれたファイル」の★場所を示す。
+# :application　は翻訳処理を行う「担当プログラム（窓口）」の★名前を示す。
+
 WSGI_APPLICATION = 'todoproject.wsgi:application'
 
 
 # 3 Docker(コンテナ)が再構築されたり、破壊されても、以前の投降したToDoアプリの文字データ（タスクの内容など）が、絶対に消えないようにするための安全な保管庫の住所を設定。
 #★★「db_data」を追加する。(＝docker-compose.ymlファイルと連結する)で、本番環境でも★文字情報が消えない設定にする。
-#　注意(※以前では「db.sqlite3」のみの設定にしてたが、＝本番環境では文字消える/開発環境では消えないの設定だったので、危険なので★上記に変更した)
+#【補足】docker-compose.ymlファイル（db_volume）を、Djangoのデータ置き場（/usr/src/app/db_data/）にガチッと連結するさせているので・・。
+#　注意(※以前では「db.sqlite3」のみの設定にしてたが、＝本番環境では文字消える/開発環境では消えないの設定だったので、危険なので★上記に急遽、変更した)
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',　　　　　　
-        'NAME': BASE_DIR / 'db_data' / 'db.sqlite3',    #　←Dockerの標準機能である 「ボリュームマウント（Volume Mount）を使用する。コンテナの外（現実世界）と中（コンテナの世界）を繋ぐため、文字が消えない設定に出来る。
+        'NAME': BASE_DIR / 'db_data' / 'db.sqlite3',    #　←★Dockerの標準機能である 「ボリュームマウント（Volume Mount）を使用する。コンテナの外（現実世界）と中（コンテナの世界）を繋ぐため、文字が消えない設定に出来る。
 　　　　　
  
     }
