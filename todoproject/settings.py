@@ -1,7 +1,7 @@
 
-import os　#★
-import environ  # ★django-environライブラリを使うので。
-from pathlib import Path   #★
+import os　#　1★
+import environ  # 1★django-environライブラリを使うので。
+from pathlib import Path   #　1★
 
 from pathlib import Path
 from dotenv import load_dotenv
@@ -10,21 +10,35 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# ★.envファイル(22番でDjangoシークレトキーやEC2のMy IPなど自動で呼び出し)を探して読み込む設定 （ ● このBASE_DIRの下に、下記2行を追記）
-env = environ.Env() #★
-environ.Env.read_env(os.path.join(BASE_DIR, '.env')) #★
+##　1【大元の流れ】本番デプロイでのIPなど変数化の仕組み
+## .tfvars ➔ .env ➔ settings.pyファイルが一時期本物にすり替わったenvファイルからコピーする→　本物のMY_IPを得る ➔ ALLOWED_HOSTS という箱に保管する　という流れ。
+
+# ★22番SSHトンネル(自分専用ポート番号)から入り、vpcへ入る。
+# ★.tfvarsファイルが本物　envファイルはダミー。
+#.tfvarsファイルで救い上げた本物の内容(IPやシークレットキーなど)が、一時的にenvファイルに はめ込まれる。
+#それをsettings.pyファイルは、一時期本物にすり替わったenvファイルからコピーして、本物を得る流れになる。
+
+#1-1 大まかな指示★settings.pyファイルが、一時的に本物にすり替わった.envファイル内容を探して読み込む設定 （★★このBASE_DIRの下に、下記2行を追記）
+env = environ.Env() 
+environ.Env.read_env(os.path.join(BASE_DIR, '.env')) 
 
 
-#★シークレットキーとIPを変数化(envファイルとの連携)
-SECRET_KEY = env('SECRET_KEY', default= '')　　#←シークレットキーを変数化している。
-MY_IP = env('MY_IP', default='127.0.0.1') 　　　#←変数化（IP）、変数がないときはデフォルトで127.0.0.1（＝世界共通ローカルIP)
+#1-2 具体的指示★上記にある1-1の流れと同じで、settings.pyファイルが、一時的に本物になっているenvファイル(シークレットキーやIP）をコピーしに行く)ver
+SECRET_KEY = env('SECRET_KEY', default= '')　　#←シークレットキーを変数化にして本物公開の危険性を防ぐ。
+MY_IP = env('MY_IP', default='127.0.0.1') 　　　#←変数化（IP）、変数がないときはデフォルトで127.0.0.1（＝世界共通ローカルIP)で反映させて「エラー予防
 
+
+#1-3 DEBUGでの支持★唯一このDEBUGだけは、envファイルには本物の情報が記入されているので、.tfvarsファイルを通さずに、envファイルから直接本物の情報をコピーして組み込む。
 DEBUG = env.bool('DEBUG', default=False)　　　
 
+
+#1-4 コピーした本物を保管する箱★一時的に本物になっている.envファイルからsettings.pyファイルがコピーしてきた「本物IP」などを入れる箱(ALLOWED_HOSTS)の定義。
+#即ち、コピーして得られた本物の情報は、内装系のDjangoアプリ内で保管することになる。
+
 ALLOWED_HOSTS = [
-    MY_IP,
-    'localhost',
-    '127.0.0.1',　　　　　#←IP（世界共通ローカルIP)
+    MY_IP,               # ← 一時的に本物になった .envファイル からsettings.pyファイルがコピーする。そのコピーした本物IPなどを保管する箱」
+    'localhost',         # ←サーバー自身の、内部通信の専用の名前(★住所名を示す)　　　→実際通るDjango内線★ポート番号(★部屋・玄関番号)である(localhost:8000)とも繋がる。
+    '127.0.0.1',　　　　　# ←サーバー自身の、内部通信の★住所番号(127.0.0.1)　＝IP（世界共通ローカルIP)　
 
 ]
 
@@ -74,12 +88,16 @@ TEMPLATES = [
             
 WSGI_APPLICATION = 'todoproject.wsgi:application'
 
+
+# 3 Docker(コンテナ)が再構築されたり、破壊されても、以前の投降したToDoアプリの文字データ（タスクの内容など）が、絶対に消えないようにするための安全な保管庫の住所を設定。
+#★★「db_data」を追加する。(＝docker-compose.ymlファイルと連結する)で、本番環境でも★文字情報が消えない設定にする。
+#　注意(※以前では「db.sqlite3」のみの設定にしてたが、＝本番環境では文字消える/開発環境では消えないの設定だったので、危険なので★上記に変更した)
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db_data' / 'db.sqlite3',    
-　　　　　#↑～☆☆最新修正で「db_data」に追加する。(＝docker-compose.ymlファイルと連結)で、本番環境でも文字情報が消えない設定にする。
-　　　　　#↑　注意(※以前では「db.sqlite3」のみの設定にしてた。＝本番環境では文字消える/開発環境では消えないの設定だったので、危険なので上記に変更した)
+        'ENGINE': 'django.db.backends.sqlite3',　　　　　　
+        'NAME': BASE_DIR / 'db_data' / 'db.sqlite3',    #　←Dockerの標準機能である 「ボリュームマウント（Volume Mount）を使用する。コンテナの外（現実世界）と中（コンテナの世界）を繋ぐため、文字が消えない設定に出来る。
+　　　　　
  
     }
 }
