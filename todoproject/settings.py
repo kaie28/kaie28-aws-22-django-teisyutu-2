@@ -9,16 +9,17 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# ★.envファイル(22番でDjangoシークレトキーやEC2のMy IPなど自動で呼び出し)を探して読み込む設定 （ ● このBASE_DIRの下に、下記2行を追記）
 
+# ★.envファイル(22番でDjangoシークレトキーやEC2のMy IPなど自動で呼び出し)を探して読み込む設定 （ ● このBASE_DIRの下に、下記2行を追記）
 env = environ.Env() #★
 environ.Env.read_env(os.path.join(BASE_DIR, '.env')) #★
 
-#★シークレットキーとIPを変数化
-SECRET_KEY = env('SECRET_KEY', default= '')　　#←変数化(シークレットキー)
-MY_IP = env('MY_IP', default='127.0.0.1') 　　　#←変数化（IP）、変数がないときはデフォルトで127.0.0.1
 
-DEBUG = True
+#★シークレットキーとIPを変数化(envファイルとの連携)
+SECRET_KEY = env('SECRET_KEY', default= '')　　#←シークレットキーを変数化している。
+MY_IP = env('MY_IP', default='127.0.0.1') 　　　#←変数化（IP）、変数がないときはデフォルトで127.0.0.1（＝世界共通ローカルIP)
+
+DEBUG = env.bool('DEBUG', default=False)　　　
 
 ALLOWED_HOSTS = [
     MY_IP,
