@@ -11,12 +11,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 ##　1【大元の流れ】本番デプロイでのIPなど変数化の仕組み
-## .tfvars ➔ .env ➔ settings.pyファイルが一時期本物にすり替わったenvファイルからコピーする→　本物のMY_IPを得る ➔ ALLOWED_HOSTS という箱に保管する　という流れ。
-
+# .tfvars ➔ .env ➔ settings.pyファイルが一時期本物にすり替わったenvファイルからコピーする→　本物のMY_IPを得る ➔ ALLOWED_HOSTS という箱に保管する　という流れ。
 # ★22番SSHトンネル(自分専用ポート番号)から入り、vpcへ入る。
 # ★.tfvarsファイルが本物　envファイルはダミー。
 #.tfvarsファイルで救い上げた本物の内容(IPやシークレットキーなど)が、一時的にenvファイルに はめ込まれる。
 #それをsettings.pyファイルは、一時期本物にすり替わったenvファイルからコピーして、本物を得る流れになる。
+
 
 #1-1 大まかな指示★settings.pyファイルが、一時的に本物にすり替わった.envファイル内容を探して読み込む設定 （★★このBASE_DIRの下に、下記2行を追記）
 env = environ.Env() 
